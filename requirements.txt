@@ -18,3 +18,5 @@ flake8==4.0.1
 pre-commit==2.20.0
 sphinx==4.5.0
 sphinx-rtd-theme==1.0.0
+new-dependency1==1.0.0
+new-dependency2==2.0.0

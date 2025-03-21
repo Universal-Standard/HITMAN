@@ -8,12 +8,17 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install -e .[dev]
+  - pip install new-dependency1
+  - pip install new-dependency2
 
 script:
   - pytest tests/
   - flake8
   - black --check .
   - cd docs && make html
+  - pytest new_tests/
+  - flake8 new_code/
+  - black --check new_code/
 
 deploy:
   provider: pages
@@ -22,3 +27,6 @@ deploy:
   local_dir: docs/_build/html
   on:
     branch: main
+  script:
+    - echo "Running deployment steps..."
+    - ./deploy.sh

@@ -28,6 +28,8 @@ setup(
         'celery==5.2.7',
         'redis==4.3.4',
         'flower==1.2.0',
+        'new-dependency1==1.0.0',
+        'new-dependency2==2.0.0',
     ],
     extras_require={
         'dev': [
@@ -37,6 +39,8 @@ setup(
             'pre-commit==2.20.0',
             'sphinx==4.5.0',
             'sphinx-rtd-theme==1.0.0',
+            'new-dev-dependency1==1.0.0',
+            'new-dev-dependency2==2.0.0',
         ],
     },
     classifiers=[
@@ -49,6 +53,8 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     python_requires='>=3.6',
 )
