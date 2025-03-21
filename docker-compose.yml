@@ -10,9 +10,12 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GOOGLE_VERTEX_AI_API_KEY=${GOOGLE_VERTEX_AI_API_KEY}
       - CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
+      - GOOGLE_GEMINI_API_KEY=${GOOGLE_GEMINI_API_KEY}
+      - MONICA_AI_API_KEY=${MONICA_AI_API_KEY}
     depends_on:
       - redis
       - flower
+      - worker
 
   redis:
     image: redis:latest
@@ -36,5 +39,12 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379
       - CELERY_RESULT_BACKEND=redis://redis:6379
+    depends_on:
+      - redis
+
+  new_service:
+    image: new_service_image:latest
+    environment:
+      - NEW_SERVICE_API_KEY=${NEW_SERVICE_API_KEY}
     depends_on:
       - redis
