@@ -1,20 +1,26 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
+'''yaml
+# Utilize the latest version 2.1 of the CircleCI pipeline process engine to streamline your CI/CD workflows.
+# Reference Documentation: https://circleci.com/docs/configuration-reference
+
 version: 2.1
 
-# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
-# See: https://circleci.com/docs/orb-intro/
+# Orbs are reusable packages of CircleCI configuration which allow you to share and encapsulate commands, jobs, and executors across multiple projects.
+# For more on Orbs, visit: https://circleci.com/docs/orb-intro/
+
 orbs:
-  # See the Node orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
+  # Integrate the Node orb for managing Node.js applications with ease.
+  # Check the Node orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
   node: circleci/node@5.2
-  # The S3 orb will setup the aws-cli and quickly copy or sync anything to s3.
-  # Orbs reduce the amount of configuration required for common tasks.
-  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/aws-s3
-  # NOTE: Environment variables containing the necessary secrets can be setup in the CircleCI UI
-  # See here https://circleci.com/docs/set-environment-variable/#set-an-environment-variable-in-a-project
+
+  # The S3 orb simplifies the process of setting up the AWS CLI and enables quick copying or syncing of files to Amazon S3.
+  # Utilizing orbs minimizes configuration complexity for common tasks.
+  # Learn more about the S3 orb here: https://circleci.com/developer/orbs/orb/circleci/aws-s3
+  
+  # IMPORTANT: Make sure to securely configure environment variables containing necessary secrets through the CircleCI UI.
+  # For guidance, refer to: https://circleci.com/docs/set-environment-variable/#set-an-environment-variable-in-a-project
   aws-s3: circleci/aws-s3@4.0
 
-# Define a job for running tests
+# Define a job for executing tests
 jobs:
   test:
     docker:
@@ -23,18 +29,20 @@ jobs:
       - checkout
       - node/install-packages
       - run:
-          command: npm run test
           name: Run tests
+          command: npm run test
 
 # Define a job for building and deploying the application
-jobs:
   build-and-deploy:
     docker:
       - image: cimg/node:15.1
     steps:
       - checkout
       - node/install-packages
-      - run:
+    filters:
+      branches:
+        only: main
+```      - run:
           command: npm run build
           name: Build application
       - aws-s3/sync:
